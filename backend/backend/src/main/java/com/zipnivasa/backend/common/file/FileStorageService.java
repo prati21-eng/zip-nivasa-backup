@@ -36,13 +36,14 @@ public class FileStorageService {
         String timestamp = String.valueOf(Instant.now().toEpochMilli());
         String safeName = timestamp + "-" + originalName.replaceAll("\\s+", "_");
 
-        Path folderPath = Paths.get(uploadBaseDir, subFolder);
+        String root = System.getProperty("user.dir");   // project root
+        Path folderPath = Paths.get(root, uploadBaseDir, subFolder);
         Files.createDirectories(folderPath);
 
         Path filePath = folderPath.resolve(safeName);
         file.transferTo(filePath.toFile());
 
-        // This is the path your frontend will use (similar to Express static /uploads)
         return "/uploads/" + subFolder + "/" + safeName;
+
     }
 }
