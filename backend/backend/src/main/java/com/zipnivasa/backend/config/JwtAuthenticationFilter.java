@@ -18,11 +18,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Equivalent to your middleware/auth.js protect function.
- * Extracts token from Authorization: Bearer <token>,
- * verifies it, and stores userId and role into SecurityContext.
- */
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {

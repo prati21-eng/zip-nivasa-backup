@@ -12,9 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Locale;
 
-/**
- * Migrated logic from authController.js and authService.js.
- */
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -28,14 +25,13 @@ public class AuthService {
     private final JwtUtil jwtUtil;
 
     public void register(RegisterRequest req) {
-        // Ensure basic fields
+
         if (req.getName() == null || req.getEmail() == null ||
                 req.getPhone() == null || req.getPassword() == null ||
                 req.getRole() == null) {
             throw new IllegalArgumentException("name, email, phone, password and role are required");
         }
 
-        // Check duplicate email
         String email = req.getEmail().toLowerCase(Locale.ROOT);
         if (userRepository.existsByEmail(email)) {
             throw new IllegalArgumentException("Email already registered");
@@ -45,7 +41,6 @@ public class AuthService {
         String roleModelName = null;
         String roleDocId = null;
 
-        // 1️⃣ Create role-specific document
         switch (role) {
             case "tenant" -> {
                 if (req.getProfessionType() == null ||
@@ -107,7 +102,6 @@ public class AuthService {
             default -> throw new IllegalArgumentException("Invalid role");
         }
 
-        // 2️⃣ Create main user (like User.create in Node)
         User user = User.builder()
                 .name(req.getName())
                 .email(email)
@@ -120,7 +114,6 @@ public class AuthService {
 
         user = userRepository.save(user);
 
-        // 3️⃣ Back-link userId in role document (NO lambdas)
         switch (role) {
             case "tenant" -> {
                 Tenant tenant = tenantRepository.findById(roleDocId).orElse(null);

@@ -8,9 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
 
-/**
- * Equivalent of PGOwner.js
- */
 @Document(collection = "pgowners")
 @Data
 @Builder

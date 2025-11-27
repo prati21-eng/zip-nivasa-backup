@@ -29,7 +29,6 @@ public class MessController {
     private final FileStorageService fileStorageService;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    // ---------------------------- ADD MESS ---------------------------------
 
     @PostMapping(value = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> addMess(
@@ -44,7 +43,6 @@ public class MessController {
             @RequestPart(required = false) List<MultipartFile> images
     ) throws IOException {
 
-        // get logged-in user
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null ||
                 !(auth.getPrincipal() instanceof JwtAuthenticationFilter.JwtUserPrincipal principal)) {
@@ -69,7 +67,6 @@ public class MessController {
             req.setMenu(menuList);
         }
 
-        // file upload
         if (images != null) {
             List<String> saved = images.stream()
                     .map(img -> {
@@ -88,14 +85,12 @@ public class MessController {
         return ResponseEntity.ok(ApiResponse.success("Mess added successfully!", saved));
     }
 
-    // ---------------------------- PUBLIC GET ALL ----------------------------
 
     @GetMapping("/all")
     public List<Mess> getAll() {
         return messService.getAll();
     }
 
-    // ---------------------------- GET BY ID ---------------------------------
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getMessById(@PathVariable String id) {
@@ -106,14 +101,12 @@ public class MessController {
         return ResponseEntity.ok(mess);
     }
 
-    // ---------------------------- GET BY OWNER ------------------------------
 
     @GetMapping("/owner/{ownerId}")
     public List<Mess> getByOwner(@PathVariable String ownerId) {
         return messService.getByOwner(ownerId);
     }
 
-    // ---------------------------- UPDATE MESS -------------------------------
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateMess(@PathVariable String id, @RequestBody MessRequest req) {
@@ -121,7 +114,6 @@ public class MessController {
         return ResponseEntity.ok(updated);
     }
 
-    // ---------------------------- DELETE MESS -------------------------------
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteMess(@PathVariable String id) {
@@ -129,7 +121,6 @@ public class MessController {
         return ResponseEntity.ok(ApiResponse.success("Mess deleted", null));
     }
 
-    // ---------------------------- ADD RATING -------------------------------
 
     @PostMapping("/{id}/rate")
     public ResponseEntity<?> addRating(
@@ -142,7 +133,6 @@ public class MessController {
         return ResponseEntity.ok(ApiResponse.success("Rating added", updated));
     }
 
-    // ---------------------------- SPECIAL TODAY -----------------------------
 
     @PostMapping("/publish-special")
     public ResponseEntity<?> publishSpecial(@RequestBody Mess.SpecialToday special) {

@@ -10,12 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * Equivalent to messOwner routes:
- *
- * POST /api/laundry/add
- * GET  /api/laundry/all
- */
 @RestController
 @RequestMapping("/api/laundry")
 @RequiredArgsConstructor

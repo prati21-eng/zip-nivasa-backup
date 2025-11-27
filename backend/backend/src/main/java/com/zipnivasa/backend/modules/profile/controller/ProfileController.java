@@ -11,12 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * Mirrors Backend/routes/profileRoutes.js:
- *
- * GET /api/profile/me
- * PUT /api/profile/update
- */
 @RestController
 @RequestMapping("/api/profile")
 @RequiredArgsConstructor
@@ -24,7 +18,6 @@ public class ProfileController {
 
     private final ProfileService profileService;
 
-    // ---------------------- GET PROFILE ----------------------------
 
     @GetMapping("/me")
     public ResponseEntity<?> getProfile() {
@@ -53,7 +46,6 @@ public class ProfileController {
         );
     }
 
-    // ---------------------- UPDATE PROFILE -------------------------
 
     @PutMapping("/update")
     public ResponseEntity<?> updateProfile(@RequestBody ProfileUpdateRequest req) {

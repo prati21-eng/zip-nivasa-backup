@@ -10,12 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * Mirrors backend/routes/messOwnerRoutes.js:
- *
- * POST /api/mess-owner/add
- * GET  /api/mess-owner/all
- */
 @RestController
 @RequestMapping("/api/mess-owner")
 @RequiredArgsConstructor
@@ -23,7 +17,6 @@ public class MessOwnerController {
 
     private final MessOwnerService messOwnerService;
 
-    // POST /api/mess-owner/add
     @PostMapping("/add")
     public ResponseEntity<?> addMessOwner(@RequestBody MessOwnerRequest req) {
         try {
@@ -37,7 +30,6 @@ public class MessOwnerController {
         }
     }
 
-    // GET /api/mess-owner/all
     @GetMapping("/all")
     public ResponseEntity<List<MessOwner>> getAllMessOwners() {
         List<MessOwner> owners = messOwnerService.getAll();

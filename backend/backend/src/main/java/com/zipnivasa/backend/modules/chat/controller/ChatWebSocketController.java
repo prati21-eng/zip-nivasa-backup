@@ -15,21 +15,17 @@ public class ChatWebSocketController {
     private final ChatService chatService;
     private final ChatWebSocketService webSocketService;
 
-    // ----------- SEND MESSAGE -----------
     @MessageMapping("/chat/send")
     public void sendMessage(@Payload SendMessageRequest req,
                             @Header("user-id") String senderId) {
 
         MessageResponse saved = chatService.send(senderId, req);
 
-        // send to receiver
         webSocketService.sendPrivateMessage(req.getReceiver(), saved);
 
-        // echo to sender
         webSocketService.sendPrivateMessage(senderId, saved);
     }
 
-    // ----------- TYPING -----------
     @MessageMapping("/chat/typing")
     public void typing(@Header("user-id") String sender,
                        @Header("receiver-id") String receiver) {

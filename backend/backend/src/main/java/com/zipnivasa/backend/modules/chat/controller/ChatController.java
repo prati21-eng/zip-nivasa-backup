@@ -24,7 +24,6 @@ public class ChatController {
         return p.getId();
     }
 
-    // ---------------- SEND MESSAGE --------------------
     @PostMapping("/send")
     public ResponseEntity<?> send(@RequestBody SendMessageRequest req) {
         String sender = getUserId();
@@ -32,8 +31,6 @@ public class ChatController {
                 ApiResponse.success("Message sent", chatService.send(sender, req))
         );
     }
-
-    // ---------------- GET HISTORY ----------------------
     @GetMapping("/history/{receiverId}")
     public ResponseEntity<?> history(@PathVariable String receiverId) {
         String me = getUserId();
@@ -42,7 +39,6 @@ public class ChatController {
         );
     }
 
-    // ---------------- GET CONVERSATIONS -----------------
     @GetMapping("/conversations")
     public ResponseEntity<?> conversations() {
         String me = getUserId();
@@ -51,7 +47,6 @@ public class ChatController {
         );
     }
 
-    // ---------------- MARK AS READ -----------------------
     @PostMapping("/mark-read")
     public ResponseEntity<?> markRead(@RequestBody(required = true)
                                       java.util.Map<String, String> body) {

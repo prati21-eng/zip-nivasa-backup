@@ -8,9 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Handles LaundryOwner CRUD operations.
- */
 @Service
 @RequiredArgsConstructor
 public class LaundryOwnerService {

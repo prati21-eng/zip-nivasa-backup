@@ -4,10 +4,6 @@ import lombok.Data;
 
 import java.util.List;
 
-/**
- * Helper DTO for creating a PG listing.
- * We'll fill this inside the controller after parsing request params.
- */
 @Data
 public class PGRequest {
 

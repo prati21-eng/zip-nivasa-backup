@@ -13,7 +13,6 @@ public class WebSocketEvents {
 
     private final ChatWebSocketService chatWebSocketService;
 
-    // -------------------- CONNECT EVENT --------------------
     @EventListener
     public void handleSessionConnected(SessionConnectEvent event) {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
@@ -26,7 +25,6 @@ public class WebSocketEvents {
         }
     }
 
-    // -------------------- DISCONNECT EVENT --------------------
     @EventListener
     public void handleSessionDisconnected(SessionDisconnectEvent event) {
         String sessionId = event.getSessionId();

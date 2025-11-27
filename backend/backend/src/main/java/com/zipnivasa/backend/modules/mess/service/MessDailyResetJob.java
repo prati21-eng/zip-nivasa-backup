@@ -14,11 +14,6 @@ public class MessDailyResetJob {
 
     private final MessRepository messRepository;
 
-    /**
-     * Cron: every night at midnight
-     * Same as your node-cron job:
-     * 0 0 * * *
-     */
     @Scheduled(cron = "0 0 0 * * *")
     public void resetDailySpecial() {
 

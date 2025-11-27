@@ -8,16 +8,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Handles business logic related to PG listings.
- */
 @Service
 @RequiredArgsConstructor
 public class PGService {
 
     private final PGRepository pgRepository;
 
-    // Equivalent of createPG in Node
     public PG createPG(PGRequest req) {
         PG pg = PG.builder()
                 .title(req.getTitle())
@@ -40,18 +36,15 @@ public class PGService {
         return pgRepository.save(pg);
     }
 
-    // Equivalent of getAllPGs
     public List<PG> getAllPGs() {
         return pgRepository.findAllByOrderByCreatedAtDesc();
     }
 
-    // Equivalent of getPGById
     public PG getPGById(String id) {
         return pgRepository.findById(id)
                 .orElse(null);
     }
 
-    // Equivalent of getPGsByOwner (using req.user.id in Node)
     public List<PG> getPGsByOwner(String ownerId) {
         return pgRepository.findByOwnerOrderByCreatedAtDesc(ownerId);
     }

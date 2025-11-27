@@ -16,13 +16,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * Mirrors your authController.js:
- *  POST /api/auth/register
- *  POST /api/auth/login
- *  GET  /api/auth/me
- *  GET  /api/auth/user/:id
- */
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -112,7 +105,6 @@ public class AuthController {
                 .orElseGet(() -> ResponseEntity.status(404).body(ApiResponse.failure("User not found")));
     }
 
-    // ====== DTOs for responses ======
 
     @Data
     @AllArgsConstructor

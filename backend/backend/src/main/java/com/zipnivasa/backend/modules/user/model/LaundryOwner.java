@@ -8,9 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
 
-/**
- * Equivalent of LaundryOwner.js
- */
 @Document(collection = "laundryowners")
 @Data
 @Builder

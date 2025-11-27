@@ -2,10 +2,6 @@ package com.zipnivasa.backend.modules.auth.dto;
 
 import lombok.Data;
 
-/**
- * Equivalent of your req.body in register().
- * We keep role-specific fields generic as "roleBody".
- */
 @Data
 public class RegisterRequest {
 

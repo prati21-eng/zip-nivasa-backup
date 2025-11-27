@@ -4,10 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Equivalent of login response in Node:
- * { token, user: { id, name, email, role } }
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

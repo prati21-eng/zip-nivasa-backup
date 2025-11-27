@@ -29,7 +29,6 @@ public class ChatWebSocketService {
     // sessionId → userId
     private final Map<String, String> sessionToUser = new ConcurrentHashMap<>();
 
-    // ---------------- Register user -------------------
 
     public void registerUser(String userId, String sessionId) {
         onlineUsers.put(userId, sessionId);
@@ -37,8 +36,6 @@ public class ChatWebSocketService {
 
         broadcastOnlineUsers();
     }
-
-    // ---------------- Remove user when disconnect -------------------
 
     public void removeUser(String sessionId) {
         String userId = sessionToUser.remove(sessionId);
@@ -48,7 +45,6 @@ public class ChatWebSocketService {
         }
     }
 
-    // ---------------- Broadcast list of online users -------------------
 
     public void broadcastOnlineUsers() {
         Set<String> users = onlineUsers.keySet();
@@ -59,13 +55,11 @@ public class ChatWebSocketService {
         );
     }
 
-    // ---------------- Send private message -------------------
 
     public void sendPrivateMessage(String receiverId, Object payload) {
         messagingTemplate.convertAndSend("/queue/messages/" + receiverId, payload);
     }
 
-    // ---------------- Typing indicator -------------------
 
     public void sendTyping(String receiverId, String senderId) {
         messagingTemplate.convertAndSend("/queue/typing/" + receiverId, senderId);
@@ -75,7 +69,6 @@ public class ChatWebSocketService {
         messagingTemplate.convertAndSend("/queue/stop-typing/" + receiverId, senderId);
     }
 
-    // ---------------- Utils -------------------
 
     public boolean isUserOnline(String userId) {
         return onlineUsers.containsKey(userId);

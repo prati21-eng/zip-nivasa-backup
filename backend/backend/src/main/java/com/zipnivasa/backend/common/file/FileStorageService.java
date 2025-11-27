@@ -11,22 +11,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
 
-/**
- * Handles saving uploaded files to disk.
- * Similar to your multer config that saves into "uploads/pgs".
- */
 @Service
 public class FileStorageService {
 
-    // Base directory where uploads will be stored (configurable)
-    // e.g. "uploads" → actual path "uploads/pgs"
     @Value("${file.upload-base-dir:uploads}")
     private String uploadBaseDir;
 
-    /**
-     * Save a file under a subfolder (like "pgs", "messes")
-     * Returns the relative path used by frontend, e.g. /uploads/pgs/<filename>
-     */
     public String saveFile(String subFolder, MultipartFile file) throws IOException {
         String originalName = file.getOriginalFilename();
         if (originalName == null) {

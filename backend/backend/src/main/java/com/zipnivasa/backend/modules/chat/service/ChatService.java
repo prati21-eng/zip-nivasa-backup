@@ -34,7 +34,6 @@ public class ChatService {
         return toResponse(saved);
     }
 
-    // ------------------- GET HISTORY ------------------------
     public List<MessageResponse> getHistory(String me, String other) {
         List<Message> messages1 = messageRepository.findBySenderAndReceiverOrderByCreatedAtAsc(me, other);
         List<Message> messages2 = messageRepository.findByReceiverAndSenderOrderByCreatedAtAsc(me, other);
@@ -48,7 +47,6 @@ public class ChatService {
         return merged.stream().map(this::toResponse).toList();
     }
 
-    // ------------------- GET CONVERSATIONS -------------------
     public List<Map<String, Object>> getConversations(String myId) {
 
         List<Message> msgs = messageRepository.findBySenderOrReceiverOrderByCreatedAtDesc(myId, myId);
@@ -71,7 +69,6 @@ public class ChatService {
             entry.put("unreadCount", unread);
         }
 
-        // Add partner details
         for (String partnerId : map.keySet()) {
             Optional<User> u = userRepository.findById(partnerId);
             u.ifPresent(user ->
@@ -89,7 +86,6 @@ public class ChatService {
         return new ArrayList<>(map.values());
     }
 
-    // ------------------- MARK AS READ ------------------------
     public void markAsRead(String myId, String partnerId) {
         List<Message> unread = messageRepository
                 .findBySenderAndReceiverAndReadAtIsNull(partnerId, myId);
@@ -100,7 +96,6 @@ public class ChatService {
         });
     }
 
-    // ------------------- Mapper ------------------------------
     private MessageResponse toResponse(Message m) {
         return MessageResponse.builder()
                 .id(m.getId())

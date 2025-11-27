@@ -4,10 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Generic API response wrapper to keep format consistent.
- * Similar to your { success, message, data } objects in Node.
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

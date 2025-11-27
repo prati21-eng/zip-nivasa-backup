@@ -9,9 +9,6 @@ import java.security.Key;
 import java.util.Date;
 import java.util.Map;
 
-/**
- * Equivalent to your jsonwebtoken.sign / verify logic.
- */
 @Component
 public class JwtUtil {
 

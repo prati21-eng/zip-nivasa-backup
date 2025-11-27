@@ -14,12 +14,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-/**
- * Equivalent of your app.use(protect...) config.
- * - Disables sessions (stateless API)
- * - Permits /api/auth/** and static /uploads
- * - Secures all other /api/** endpoints by default
- */
+import com.zipnivasa.backend.config.JwtAuthenticationFilter;
+
+
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
+
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -29,8 +32,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(c -> c.disable())
-                .cors(Customizer.withDefaults())
+                .csrf(csrf -> csrf.disable())
+                .cors(Customizer.withDefaults())   // ENABLE CORS
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/api/auth/register", "/api/auth/login").permitAll()
@@ -38,7 +41,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/pgs/**", "/api/mess/all", "/api/mess/*").permitAll()
                         .requestMatchers("/api/mess-owner/**").permitAll()
                         .requestMatchers("/api/laundry/**").permitAll()
-                        // any other API endpoint requires JWT
+                        .requestMatchers("/ws/**").permitAll()  // WebSocket STOMP allowed
                         .requestMatchers("/api/**").authenticated()
                         .anyRequest().permitAll()
                 )
@@ -49,14 +52,26 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        // Equivalent of bcryptjs.hash / compare
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration configuration
-    ) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
+    }
+
+    //  GLOBAL CORS CONFIG
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+
+        config.setAllowCredentials(true);
+        config.setAllowedOrigins(List.of("http://localhost:5173"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 }

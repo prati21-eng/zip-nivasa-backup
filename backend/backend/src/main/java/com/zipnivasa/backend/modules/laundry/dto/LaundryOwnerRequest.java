@@ -2,9 +2,6 @@ package com.zipnivasa.backend.modules.laundry.dto;
 
 import lombok.Data;
 
-/**
- * Payload for adding or updating Laundry Owner.
- */
 @Data
 public class LaundryOwnerRequest {
 

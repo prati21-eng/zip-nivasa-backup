@@ -24,14 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-/**
- * Mirrors your pgRoutes.js / pgController.js
- *
- *  GET  /api/pgs/           → getAllPGs (public)
- *  GET  /api/pgs/owner/list → getPGsByOwner (JWT)
- *  GET  /api/pgs/{id}       → getPGById (public)
- *  POST /api/pgs/           → createPG (JWT + file upload)
- */
 @RestController
 @RequestMapping("/api/pgs")
 @RequiredArgsConstructor

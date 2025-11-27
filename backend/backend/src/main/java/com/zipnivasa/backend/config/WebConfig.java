@@ -8,10 +8,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- * Exposes the physical "uploads" folder as /uploads/** URLs,
- * just like app.use("/uploads", express.static(...)).
- */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 

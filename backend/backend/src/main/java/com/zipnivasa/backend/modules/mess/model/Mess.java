@@ -10,9 +10,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Equivalent to Node Mess.js schema.
- */
 @Document(collection = "messes")
 @Data
 @Builder
@@ -54,8 +51,6 @@ public class Mess {
 
     @LastModifiedDate
     private Instant updatedAt;
-
-    // ---- Nested Subdocuments -----
 
     @Data
     @NoArgsConstructor

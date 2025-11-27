@@ -16,9 +16,6 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Optional;
 
-/**
- * Handles profile fetching and updating logic.
- */
 @Service
 @RequiredArgsConstructor
 public class ProfileService {
@@ -28,7 +25,6 @@ public class ProfileService {
     private final PGOwnerRepository pgOwnerRepository;
     private final MessOwnerRepository messOwnerRepository;
 
-    // ---------------------- Fetch Profile --------------------------
 
     public Optional<User> getUser(String userId) {
         return userRepository.findById(userId);
@@ -43,17 +39,14 @@ public class ProfileService {
         };
     }
 
-    // ---------------------- Update Profile -------------------------
 
     public void updateProfile(String userId, String role, ProfileUpdateRequest req) {
-        // Update base user
         userRepository.findById(userId).ifPresent(user -> {
             if (req.getName() != null) user.setName(req.getName());
             if (req.getPhone() != null) user.setPhone(req.getPhone());
             userRepository.save(user);
         });
 
-        // Update role-specific entity
         Map<String, Object> roleData = req.getRoleData();
         if (roleData == null || roleData.isEmpty()) return;
 
@@ -74,15 +67,10 @@ public class ProfileService {
                         messOwnerRepository.save(m);
                     });
             default -> {
-                // no-op for other roles
             }
         }
     }
 
-    /**
-     * Simple reflection-based mapper:
-     * takes map keys and sets fields on the object if they exist.
-     */
     private void applyMapToObject(Map<String, Object> map, Object target) {
         Class<?> clazz = target.getClass();
         map.forEach((key, value) -> {
@@ -90,13 +78,10 @@ public class ProfileService {
                 Field field = clazz.getDeclaredField(key);
                 field.setAccessible(true);
 
-                // basic type safety: try simple conversion for numbers
                 Object converted = convertValue(field.getType(), value);
                 field.set(target, converted);
             } catch (NoSuchFieldException ignored) {
-                // ignore unknown keys
             } catch (IllegalAccessException e) {
-                // ignore invalid fields
             }
         });
     }
@@ -108,7 +93,6 @@ public class ProfileService {
             return value;
         }
 
-        // simple conversions for common types
         if (targetType == Integer.class || targetType == int.class) {
             return Integer.valueOf(value.toString());
         }
@@ -122,7 +106,6 @@ public class ProfileService {
             return Boolean.valueOf(value.toString());
         }
 
-        // fallback
         return value.toString();
     }
 }

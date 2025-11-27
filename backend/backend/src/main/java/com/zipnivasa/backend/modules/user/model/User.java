@@ -9,9 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
 
-/**
- * Equivalent of Backend/models/User.js
- */
 @Document(collection = "users")
 @Data
 @Builder
@@ -20,7 +17,7 @@ import java.time.Instant;
 public class User {
 
     @Id
-    private String id;  // Mongo ObjectId as String
+    private String id;
 
     private String name;
 
@@ -29,15 +26,12 @@ public class User {
 
     private String phone;
 
-    private String password; // hashed (BCrypt)
+    private String password;
 
-    // "tenant", "pgowner", "messowner", "laundry"
     private String role;
 
-    // Id of role-specific document (Tenant/PGOwner/etc.)
     private String roleId;
 
-    // "Tenant", "PGOwner", "MessOwner", "LaundryOwner"
     private String roleModel;
 
     @CreatedDate
